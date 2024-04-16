@@ -12,6 +12,8 @@ $statement = $pdo->prepare($sql);
 $statement->execute();
 $pages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+$date_format = 'Y年m月d日H時i分s秒';
+
 foreach ($pages as $key => $value) {
     $standard_key_array[$key] = $value['created_at'];
 }
@@ -38,7 +40,7 @@ array_multisort($standard_key_array, SORT_DESC, $pages);
         <tr>
           <td><?php echo $page['title']; ?></td>
           <td><?php echo $page['content']; ?></td>
-          <td><?php echo $page['created_at']; ?></td>
+          <td><?php echo date($date_format, strtotime($page['created_at'])); ?></td>
           <td><a href="./edit.php?id=<?php echo $page['id']; ?>">編集</a></td>
           <td><a href="./delete.php?id=<?php echo $page['id']; ?>">削除</a></td>
         </tr>
