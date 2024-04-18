@@ -49,4 +49,15 @@ final class PageDao
             ':content' => $page->content()->value(),
         ));
     }
+
+    public function readEdit($id)
+    {
+        $sql = sprintf(
+            'SELECT * FROM %s WHERE id = :id',
+            self::TABLE_NAME
+        );
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(['id' => $id]);
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
 }
