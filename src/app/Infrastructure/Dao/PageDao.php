@@ -60,4 +60,25 @@ final class PageDao
         $statement->execute(['id' => $id]);
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function allPage()
+    {
+        $sql = sprintf(
+            'SELECT * FROM %s ',
+            self::TABLE_NAME
+        );
+        $statement = $this->pdo->query($sql);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function searchPage($keyword)
+    {
+        $sql = sprintf(
+            'SELECT * FROM %s WHERE title LIKE ?',
+            self::TABLE_NAME
+        );
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(['%' . $keyword . '%']);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
