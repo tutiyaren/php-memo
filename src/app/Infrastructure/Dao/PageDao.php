@@ -35,4 +35,18 @@ final class PageDao
         $statement->bindValue(':content', $page->content()->value(), PDO::PARAM_STR);
         $statement->execute();
     }
+
+    public function update(EditPage $page): void
+    {
+        $sql = sprintf(
+            'UPDATE %s SET title = :title, content = :content WHERE id = :id',
+            self::TABLE_NAME
+        );
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute(array(
+            ':id' => $page->id()->value(),
+            ':title' => $page->title()->value(),
+            ':content' => $page->content()->value(),
+        ));
+    }
 }

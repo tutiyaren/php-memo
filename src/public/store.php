@@ -29,7 +29,8 @@ try {
     $_SESSION['errors'][] = $e->getMessage();
     $_SESSION['title'] = $title;
     $_SESSION['content'] = $content;
-    Redirect::handler('/create.php');
+    $errors = $_SESSION['errors'] ?? [];
+    unset($_SESSION['errors']);
 }
 
 // $dbUserName = 'root';
@@ -61,7 +62,11 @@ try {
 
 <body>
   <div>
-    <p><?php echo $error . "\n"; ?></p>
+    <?php foreach ($errors as $error): ?>
+      <p><?php echo $error; ?></p>
+    <?php endforeach; ?>
+  </div>
+  <div>
     <a href="./index.php">
         <p>トップページへ</p>
     </a>
