@@ -7,22 +7,24 @@ use App\UseCase\UseCaseInput\CreateFavoriteInput;
 use App\UseCase\UseCaseOutput\CreateFavoriteOutput;
 use App\Domain\ValueObject\Page_favorite\NewPage_favorite;
 use App\Domain\Entity\Page_favorites;
+use App\Adapter\Favorite\FavoriteMysqlCommand;
+use App\Adapter\Favorite\FavoriteMysqlQuery;
 
 final class CreateFavoriteInteractor
 {
     const COMPLETED_MESSAGE = 'マークを追加しました';
-    private $favoriteRepository;
-    private $favoriteQueryServise;
+    private $favoriteMysqlCommand;
+    private $favoriteMysqlQuery;
     private $input;
 
-    public function __construct(CreateFavoriteInput $input)
+    public function __construct(CreateFavoriteInput $input, FavoriteMysqlQuery $favoriteMysqlQuery, FavoriteMysqlCommand $favoriteMysqlCommand)
     {
-        $this->favoriteRepository = new FavoriteRepository();
-        $this->favoriteQueryServise = new FavoriteQueryServise();
+        $this->favoriteMysqlCommand = $favoriteMysqlCommand;
+        $this->favoriteMysqlQuery = $favoriteMysqlQuery;
         $this->input = $input;
     }
 
-    public function handler(): CreateFavoriteOutput
+    public function run(): CreateFavoriteOutput
     {
         $this->createFavorite();
         return new CreateFavoriteOutput(true, self::COMPLETED_MESSAGE);
@@ -34,6 +36,6 @@ final class CreateFavoriteInteractor
             $this->input->page_id(),
             $this->input->status()
         );
-        $this->favoriteRepository->insert($newFavorite);
+        $this->favoriteMysqlCommand->insert($newFavorite);
     }
 }

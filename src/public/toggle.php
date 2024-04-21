@@ -10,6 +10,8 @@ use App\UseCase\UseCaseInteractor\CreateFavoriteInteractor;
 use App\UseCase\UseCaseInteractor\EditFavoriteInteractor;
 use App\Infrastructure\Dao\FavoriteDao;
 use App\UseCase\GetStatusPageUseCase;
+use App\Adapter\Favorite\FavoriteMysqlCommand;
+use App\Adapter\Favorite\FavoriteMysqlQuery;
 
 $dbUserName = 'root';
 $dbPassword = 'password';
@@ -31,13 +33,16 @@ try {
     $getPageId = new GetStatusPageUseCase($favoriteRepository);
     $checkPageId = $getPageId->getPageId($id);
 
+    $favoriteMysqlQuery = new FavoriteMysqlQuery();
+    $favoriteMysqlCommand = new FavoriteMysqlCommand();
+
     if($checkPageId) {
         $useCaseInput = new EditFavoriteInput($pege_id, $status);
         $useCase = new EditFavoriteInteractor($useCaseInput);
     }
     if(!$checkPageId) {
         $useCaseInput = new CreateFavoriteInput($pege_id, $status);
-        $useCase = new CreateFavoriteInteractor($useCaseInput);
+        $useCase = new CreateFavoriteInteractor($useCaseInput, $favoriteMysqlQuery, $favoriteMysqlCommand);
     }
     $useCaseOutput = $useCase->handler();
     if(!$useCaseOutput->isSuccess()) {
