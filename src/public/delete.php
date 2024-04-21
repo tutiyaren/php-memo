@@ -8,6 +8,12 @@ $pdo = new PDO(
 );
 
 $id = filter_input(INPUT_GET, 'id');
+
+$sqlDeleteFavorites = "DELETE FROM page_favorites WHERE page_id = :page_id";
+$statementDeleteFavorites = $pdo->prepare($sqlDeleteFavorites);
+$statementDeleteFavorites->bindValue(':page_id', $id, PDO::PARAM_INT);
+$statementDeleteFavorites->execute();
+
 $sql = "DELETE FROM pages where id = $id";
 $statement = $pdo->prepare($sql);
 $statement->execute();
