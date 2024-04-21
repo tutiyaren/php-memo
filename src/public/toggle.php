@@ -29,7 +29,7 @@ try {
     $pege_id = new PageId($id);
     $status = new Status($statusValue);
 
-    $favoriteRepository = new FavoriteRepository(new FavoriteDao($pdo));
+    $favoriteRepository = new FavoriteMysqlCommand(new FavoriteDao($pdo));
     $getPageId = new GetStatusPageUseCase($favoriteRepository);
     $checkPageId = $getPageId->getPageId($id);
 
