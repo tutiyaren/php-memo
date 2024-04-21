@@ -6,23 +6,34 @@ use App\Adapter\Repository\PageRepository;
 use App\UseCase\UseCaseInput\CreatePageInput;
 use App\UseCase\UseCaseOutput\CreatePageOutput;
 use App\Domain\ValueObject\Page\NewPage;
+use App\Adapter\Page\PageMysqlCommand;
+use App\Adapter\Page\PageMysqlQuery;
 
 final class CreatePageInteractor
 {
     const COMPLETED_MESSAGE = 'メモを追加しました';
-    private $pageRepository;
-    private $pageQueryServise;
+    private $pageMysqlCommand;
+    private $pageMysqlQuery;
     private $input;
 
-    public function __construct(CreatePageInput $input)
-    {
-        $this->pageRepository = new PageRepository();
-        $this->pageQueryServise = new PageQueryServise();
+    public function __construct(
+        CreatePageInput $input,
+        PageMysqlQuery $pageMysqlQuery,
+        PageMysqlCommand $pageMysqlCommand
+    ) {
+        $this->pageMysqlCommand = new PageMysqlCommand();
+        $this->pageMysqlQuery = new PageMysqlQuery();
         $this->input = $input;
     }
 
-    public function handler(): CreatePageOutput
+    public function run(): CreatePageOutput
     {
+        if(strlen($this->input->title()->value()) > 30) {
+            return new CreatePageOutput(false, 'タイトル30文字以内で');
+        }
+        if(strlen($this->input->content()->value()) > 100) {
+            return new CreatePageOutput(false, '内容100文字以内で');
+        }
         $this->createPage();
         return new CreatePageOutput(true, self::COMPLETED_MESSAGE);
     }
@@ -33,6 +44,6 @@ final class CreatePageInteractor
             $this->input->title(),
             $this->input->content()
         );
-        $this->pageRepository->insert($newPage);
+        $this->pageMysqlCommand->insert($newPage);
     }
 }

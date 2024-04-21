@@ -6,6 +6,8 @@ use App\Domain\ValueObject\Page\PageTitle;
 use App\Domain\ValueObject\Page\PageContent;
 use App\UseCase\UseCaseInput\CreatePageInput;
 use App\UseCase\UseCaseInteractor\CreatePageInteractor;
+use App\Adapter\Page\PageMysqlCommand;
+use App\Adapter\Page\PageMysqlQuery;
 
 $title = filter_input(INPUT_POST, 'title');
 $content = filter_input(INPUT_POST, 'content');
@@ -18,8 +20,10 @@ try {
     $pageTitle = new PageTitle($title);
     $pageContent = new PageContent($content);
     $usseCaseInput = new CreatePageInput($pageTitle, $pageContent);
-    $useCase = new CreatePageInteractor($usseCaseInput);
-    $useCaseOutput = $useCase->handler();
+    $pageMysqlQuery = new PageMysqlQuery();
+    $pageMysqlCommand = new PageMysqlCommand();
+    $useCase = new CreatePageInteractor($usseCaseInput, $pageMysqlQuery, $pageMysqlCommand);
+    $useCaseOutput = $useCase->run();
     if(!$useCaseOutput->isSuccess()) {
         throw new Exception($useCaseOutput->message());
     }
