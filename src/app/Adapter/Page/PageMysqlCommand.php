@@ -18,4 +18,9 @@ class PageMysqlCommand
     {
         $this->pageDao->create($page);
     }
+
+    public function edit(EditPage $page): void
+    {
+        $this->pageDao->update($page);
+    }
 }
