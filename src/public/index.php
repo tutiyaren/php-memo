@@ -4,6 +4,7 @@ use App\Infrastructure\Redirect\Redirect;
 use App\Adapter\Repository\PageRepository;
 use App\UseCase\GetAllPageUseCase;
 use App\Infrastructure\Dao\PageDao;
+use App\Adapter\Page\PageMysqlCommand;
 session_start();
 $errors = $_SESSION['errors'] ?? [];
 unset($_SESSION['errors']);
@@ -17,7 +18,7 @@ $pdo = new PDO(
 );
 
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
-$pageAllRepository = new PageRepository(new PageDao($pdo));
+$pageAllRepository = new PageMysqlCommand(new PageDao($pdo));
 $getAllUseCase = new GetAllPageUseCase($pageAllRepository);
 if (!empty($keyword)) {
     $pages = $getAllUseCase->searchAllPage($keyword);

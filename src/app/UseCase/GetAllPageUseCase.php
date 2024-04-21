@@ -2,23 +2,24 @@
 namespace App\UseCase;
 require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Adapter\Repository\PageRepository;
+use App\Adapter\Page\PageMysqlCommand;
 
 class GetAllPageUseCase
 {
-    public $pageAllRepository;
+    public $pageAllCommand;
 
-    public function __construct(PageRepository $pageAllRepository)
+    public function __construct(PageMysqlCommand $pageAllCommand)
     {
-        $this->pageAllRepository = $pageAllRepository;
+        $this->pageAllCommand = $pageAllCommand;
     }
 
     public function readAllPage()
     {
-        return $this->pageAllRepository->allPage();
+        return $this->pageAllCommand->allPage();
     }
 
     public function searchAllPage($keyword)
     {
-        return $this->pageAllRepository->searchPage($keyword);
+        return $this->pageAllCommand->searchPage($keyword);
     }
 }
