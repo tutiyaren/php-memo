@@ -23,4 +23,9 @@ class PageMysqlCommand
     {
         $this->pageDao->update($page);
     }
+
+    public function readEdit($id)
+    {
+        return $this->pageDao->readEdit($id);
+    }
 }
