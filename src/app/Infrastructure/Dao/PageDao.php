@@ -64,7 +64,7 @@ final class PageDao
     public function allPage()
     {
         $sql = sprintf(
-            'SELECT * FROM %s ',
+            'SELECT pages.*, page_favorites.status FROM %s LEFT JOIN page_favorites ON pages.id = page_favorites.page_id',
             self::TABLE_NAME
         );
         $statement = $this->pdo->query($sql);
@@ -74,7 +74,7 @@ final class PageDao
     public function searchPage($keyword)
     {
         $sql = sprintf(
-            'SELECT * FROM %s WHERE title LIKE ?',
+            'SELECT pages.*,  page_favorites.status FROM %s LEFT JOIN page_favorites ON pages.id = page_favorites.page_id WHERE title LIKE ?',
             self::TABLE_NAME
         );
         $statement = $this->pdo->prepare($sql);

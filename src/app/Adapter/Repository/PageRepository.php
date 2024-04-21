@@ -2,7 +2,7 @@
 namespace App\Adapter\Repository;
 require_once __DIR__ . '/../../../vendor/autoload.php';
 use App\Infrastructure\Dao\PageDao;
-use App\domain\ValueObject\Page\NewPage;
+use App\Domain\ValueObject\Page\NewPage;
 use App\Domain\ValueObject\Page\EditPage;
 
 final class PageRepository
