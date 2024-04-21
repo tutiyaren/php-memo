@@ -24,6 +24,6 @@ final class PageContent
 
     private function isInvalid(string $value): bool
     {
-        return mb_strlen($value) > 80;
+        return mb_strlen($value) > 100;
     }
 }
