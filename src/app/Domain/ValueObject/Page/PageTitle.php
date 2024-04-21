@@ -4,7 +4,7 @@ use Exception;
 
 final class PageTitle
 {
-    const INVALID_MESSAGE = 'タイトルは30ジ以内でお願いします';
+    const INVALID_MESSAGE = 'タイトルは30字以内でお願いします';
 
     private $value;
 
