@@ -7,22 +7,24 @@ use App\UseCase\UseCaseInput\EditFavoriteInput;
 use App\UseCase\UseCaseOutput\EditFavoriteOutput;
 use App\Domain\ValueObject\Page_favorite\EditPage_favorite;
 use App\Domain\Entity\Favorite;
+use App\Adapter\Favorite\FavoriteMysqlCommand;
+use App\Adapter\Favorite\FavoriteMysqlQuery;
 
 final class EditFavoriteInteractor
 {
     const COMPLETED_MESSAGE = 'マークを編集しました';
-    private $favoriteRepository;
-    private $favoriteQueryServise;
+    private $favoriteMysqlCommand;
+    private $favoriteMysqlQuery;
     private $input;
 
-    public function __construct(EditFavoriteInput $input)
+    public function __construct(EditFavoriteInput $input, FavoriteMysqlQuery $favoriteMysqlQuery, FavoriteMysqlCommand $favoriteMysqlCommand)
     {
-        $this->favoriteRepository = new FavoriteRepository();
-        $this->favoriteQueryServise = new FavoriteQueryServise();
+        $this->favoriteMysqlCommand = $favoriteMysqlCommand;
+        $this->favoriteMysqlQuery = $favoriteMysqlQuery;
         $this->input = $input;
     }
 
-    public function handler(): EditFavoriteOutput
+    public function run(): EditFavoriteOutput
     {
         $this->editFavorite();
         return new EditFavoriteOutput(true, self::COMPLETED_MESSAGE);
@@ -35,6 +37,6 @@ final class EditFavoriteInteractor
             $this->input->status()
         );
 
-        $this->favoriteRepository->edit($newFavorite);
+        $this->favoriteMysqlCommand->edit($newFavorite);
     }
 }
