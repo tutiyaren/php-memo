@@ -17,7 +17,11 @@ final class GetEditPageUseCaseTest extends TestCase
             'created_at' => '2024-04-21 14:36:30',
             'updated_at' => '2024-04-21 16:01:02',
         ];
-        $interactor = new GetEditPageUseCase(new PageMysqlCommand());
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+           
+        };
+        $interactor = new GetEditPageUseCase($pageMysqlCommand);
         $actualPageData = $interactor->readEditPage($id);
         $this->assertEquals($pageData, $actualPageData);
     }
