@@ -16,8 +16,12 @@ final class GetStatusPageUseCaseTest extends TestCase
             'created_at' => '2024-04-21 19:47:43',
             'updated_at' => '2024-04-21 19:47:43'
         ];
+        $favoriteMysqlCommand = new class extends FavoriteMysqlCommand
+        {
+           
+        };
 
-        $interactor = new GetStatusPageUseCase(new FavoriteMysqlCommand());
+        $interactor = new GetStatusPageUseCase($favoriteMysqlCommand);
         $actualFavoriteData = $interactor->getPageId($id);
         $this->assertEquals($expectedFavoriteData, $actualFavoriteData);
     }
