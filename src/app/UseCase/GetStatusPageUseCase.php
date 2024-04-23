@@ -2,18 +2,19 @@
 namespace App\UseCase;
 require_once __DIR__ . '/../../vendor/autoload.php';
 use App\Adapter\Repository\FavoriteRepository;
+use App\Adapter\Favorite\FavoriteMysqlCommand;
 
 class GetStatusPageUseCase
 {
-    public $favoriteRepository;
+    public $favoriteMysqlCommand;
 
-    public function __construct(FavoriteRepository $favoriteRepository)
+    public function __construct(FavoriteMysqlCommand $favoriteMysqlCommand)
     {
-        $this->favoriteRepository = $favoriteRepository;
+        $this->favoriteMysqlCommand = $favoriteMysqlCommand;
     }
 
-    public function getPageId(int $id): array
+    public function getPageId(int $id)
     {
-        return $this->favoriteRepository->getPageId($id);
+        return $this->favoriteMysqlCommand->getPageId($id);
     }
 }
