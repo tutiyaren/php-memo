@@ -9,7 +9,11 @@ final class GetAllPageUseCaseTest extends TestCase
 {
     public function testトップページですべてのデータを取得できる場合()
     {
-        $interactor = new GetAllPageUseCase(new PageMysqlCommand());
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+           
+        };
+        $interactor = new GetAllPageUseCase($pageMysqlCommand);
         $actualPageData = $interactor->readAllPage();
 
         $this->assertIsArray($actualPageData);
@@ -19,7 +23,11 @@ final class GetAllPageUseCaseTest extends TestCase
     public function testトップページで検索したデータを取得できる場合()
     {
         $searchKeyword = 'A';
-        $interactor = new GetAllPageUseCase(new PageMysqlCommand());
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+           
+        };
+        $interactor = new GetAllPageUseCase($pageMysqlCommand);
         $actualPageData = $interactor->searchAllPage($searchKeyword);
 
         $this->assertIsArray($actualPageData);
