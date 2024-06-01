@@ -7,23 +7,34 @@ use App\UseCase\UseCaseInput\EditPageInput;
 use App\UseCase\UseCaseOutput\EditPageOutput;
 use App\Domain\ValueObject\Page\EditPage;
 use App\Domain\Entity\Page;
+use App\Adapter\Page\PageMysqlCommand;
+use App\Adapter\Page\PageMysqlQuery;
 
 final class EditPageInteractor
 {
     const COMPLETED_MESSAGE = 'メモを編集しました';
-    private $pageRepository;
-    private $pageQueryServise;
     private $input;
+    private $pageMysqlCommand;
+    private $pageMysqlQuery;
 
-    public function __construct(EditPageInput $input)
-    {
-        $this->pageRepository = new PageRepository();
-        $this->pageQueryServise = new PageQueryServise();
+    public function __construct(
+        EditPageInput $input,
+        PageMysqlQuery $pageMysqlQuery,
+        PageMysqlCommand $pageMysqlCommand
+    ) {
+        $this->pageMysqlQuery = $pageMysqlQuery;
+        $this->pageMysqlCommand = $pageMysqlCommand;
         $this->input = $input;
     }
 
-    public function handler(): EditPageOutput
+    public function run(): EditPageOutput
     {
+        if(strlen($this->input->title()->value()) > 20) {
+            return new EditPageOutput(false, 'タイトル30文字以内で');
+        }
+        if(strlen($this->input->content()->value()) > 80) {
+            return new EditPageOutput(false, '内容100文字以内で');
+        }
         $this->editPage();
         return new EditPageOutput(true, self::COMPLETED_MESSAGE);
     }
@@ -36,6 +47,6 @@ final class EditPageInteractor
             $this->input->content()
         );
 
-        $this->pageRepository->edit($newPage);
+        $this->pageMysqlCommand->edit($newPage);
     }
 }
