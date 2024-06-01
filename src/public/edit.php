@@ -4,27 +4,17 @@ use App\Infrastructure\Redirect\Redirect;
 use App\Adapter\Repository\PageRepository;
 use App\UseCase\GetEditPageUseCase;
 use App\Infrastructure\Dao\PageDao;
+use App\Adapter\Page\PageMysqlCommand;
 
 $id = $_GET['id'];
 
 $pdo = new PDO('mysql:host=mysql;dbname=memo', 'root', 'password');
-$pageRepository = new PageRepository(new PageDao($pdo));
+$pageRepository = new PageMysqlCommand(new PageDao($pdo));
 $getPageUseCase = new GetEditPageUseCase($pageRepository);
 $page = $getPageUseCase->readEditPage($id);
 
 
-// $dbUserName = 'root';
-// $dbPassword = 'password';
-// $pdo = new PDO(
-//     'mysql:host=mysql; dbname=memo; charset=utf8',
-//     $dbUserName,
-//     $dbPassword
-// );
-// $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-// $sql = "SELECT * FROM pages where id = $id";
-// $statement = $pdo->prepare($sql);
-// $statement->execute();
-// $page = $statement->fetch();
+
 ?>
 
 <body>

@@ -75,6 +75,7 @@ final class CreateFavoriteTest extends TestCase
             }
         };
         $interactor = new CreateFavoriteInteractor($input, $favoriteMysqlQuery, $favoriteMysqlCommand);
+
         $this->assertSame(false, $interactor->run()->isSuccess());
     }
 }
