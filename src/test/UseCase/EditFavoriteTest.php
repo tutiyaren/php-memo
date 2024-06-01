@@ -8,7 +8,9 @@ use App\Domain\ValueObject\Page_favorite\PageId;
 use App\Domain\ValueObject\Page_favorite\Status;
 use App\Adapter\Favorite\FavoriteMysqlCommand;
 use App\Adapter\Favorite\FavoriteMysqlQuery;
+
 use App\Domain\ValueObject\Page_favorite\EditPage_favorite;
+
 
 final class EditFavoriteTest extends TestCase
 {
@@ -30,6 +32,7 @@ final class EditFavoriteTest extends TestCase
             }
         };
         $interactor = new EditFavoriteInteractor($input, $favoriteMysqlQuery, $favoriteMysqlCommand);
+
         $this->assertSame(true, $interactor->run()->isSuccess());
     }
 
