@@ -9,6 +9,7 @@ use App\Domain\ValueObject\Page\PageTitle;
 use App\Domain\ValueObject\Page\PageContent;
 use App\Adapter\Page\PageMysqlQuery;
 use App\Adapter\Page\PageMysqlCommand;
+use App\Domain\ValueObject\Page\NewPage;
 
 final class CreatePageTest extends TestCase
 {
@@ -18,7 +19,18 @@ final class CreatePageTest extends TestCase
             new PageTitle('AAA'),
             new PageContent('aaaaaaaa')
         );
-        $interactor = new CreatePageInteractor($input, new PageMysqlQuery(), new PageMysqlCommand());
+        $pageMysqlQuery = new class extends PageMysqlQuery
+        {
+
+        };
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+            public function insert(NewPage $page): void
+            {
+
+            }
+        };
+        $interactor = new CreatePageInteractor($input, $pageMysqlQuery, $pageMysqlCommand);
         $this->assertSame(true, $interactor->run()->isSuccess());
     }
 
@@ -30,7 +42,18 @@ final class CreatePageTest extends TestCase
             new PageTitle('あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあ'),
             new PageContent('aaaaaaaa'),
         );
-        $interactor = new CreatePageInteractor($input, new PageMysqlQuery(), new PageMysqlCommand());
+        $pageMysqlQuery = new class extends PageMysqlQuery
+        {
+
+        };
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+            public function insert(NewPage $page): void
+            {
+
+            }
+        };
+        $interactor = new CreatePageInteractor($input, $pageMysqlQuery, $pageMysqlCommand);
         $this->assertSame(false, $interactor->run()->isSuccess());
     }
 
@@ -42,7 +65,18 @@ final class CreatePageTest extends TestCase
             new PageTitle('AAA'),
             new PageContent('あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおおあいうえおあいうえおあ'),
         );
-        $interactor = new CreatePageInteractor($input, new PageMysqlQuery(), new PageMysqlCommand());
+        $pageMysqlQuery = new class extends PageMysqlQuery
+        {
+
+        };
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+            public function insert(NewPage $page): void
+            {
+
+            }
+        };
+        $interactor = new CreatePageInteractor($input, $pageMysqlQuery, $pageMysqlCommand);
         $this->assertSame(false, $interactor->run()->isSuccess());
     }
 }

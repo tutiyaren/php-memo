@@ -9,6 +9,7 @@ use App\Domain\ValueObject\Page\PageTitle;
 use App\Domain\ValueObject\Page\PageContent;
 use App\Adapter\Page\PageMysqlCommand;
 use App\Adapter\Page\PageMysqlQuery;
+use App\Domain\ValueObject\Page\EditPage;
 
 final class EditPageTest extends TestCase
 {
@@ -19,7 +20,18 @@ final class EditPageTest extends TestCase
             new PageTitle('AAA'),
             new PageContent('aaaaaaaaa')
         );
-        $interactor = new EditPageInteractor($input, new PageMysqlQuery(), new PageMysqlCommand());
+        $pageMysqlQuery = new class extends PageMysqlQuery
+        {
+
+        };
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+            public function edit(EditPage $page): void
+            {
+
+            }
+        };
+        $interactor = new EditPageInteractor($input,  $pageMysqlQuery, $pageMysqlCommand);
         $this->assertSame(true, $interactor->run()->isSuccess());
     }
 
@@ -33,7 +45,18 @@ final class EditPageTest extends TestCase
             new PageTitle('あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあ'),
             new PageContent('aaaaaaaaa')
         );
-        $interactor = new EditPageInteractor($input, new PageMysqlQuery(), new PageMysqlCommand());
+        $pageMysqlQuery = new class extends PageMysqlQuery
+          {
+
+          };
+          $pageMysqlCommand = new class extends PageMysqlCommand
+          {
+              public function edit(EditPage $page): void
+              {
+
+              }
+          };
+          $interactor = new EditPageInteractor($input,  $pageMysqlQuery, $pageMysqlCommand);
         $this->assertSame(false, $interactor->run()->isSuccess());
     }
 
@@ -46,7 +69,18 @@ final class EditPageTest extends TestCase
             new PageTitle('AAA'),
             new PageContent('あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあ')
         );
-        $interactor = new EditPageInteractor($input, new PageMysqlQuery(), new PageMysqlCommand());
+        $pageMysqlQuery = new class extends PageMysqlQuery
+        {
+
+        };
+        $pageMysqlCommand = new class extends PageMysqlCommand
+        {
+            public function edit(EditPage $page): void
+            {
+
+            }
+        };
+        $interactor = new EditPageInteractor($input,  $pageMysqlQuery, $pageMysqlCommand);
         $this->assertSame(false, $interactor->run()->isSuccess());
     }
 }

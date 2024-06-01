@@ -6,6 +6,9 @@ use App\Domain\ValueObject\Favorite\NewFavorite;
 use App\Domain\ValueObject\Favorite\EditFavorite;
 use App\Domain\ValueObject\Page_favorite\EditPage_favorite;
 use App\Domain\Entity\Page_favorites;
+use App\Domain\ValueObject\Page_favorite\NewPage_favorite;
+use App\Domain\Entity\Page_favorites;
+use App\Domain\ValueObject\Page_favorite\EditPage_favorite;
 
 class FavoriteMysqlCommand
 {
@@ -20,13 +23,16 @@ class FavoriteMysqlCommand
         $this->favoriteDao->create($favorite);
     }
 
+
     public function edit(EditPage_favorite $favorite)
     {
         $this->favoriteDao->update($favorite);
     }
+
 
     public function getPageId(int $id): array
     {
         return $this->favoriteDao->getPageId($id);
     }
 }
+
