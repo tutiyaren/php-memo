@@ -16,7 +16,7 @@ final class CreateFavoriteTest extends TestCase
     public function test0の値がstatusにある場合()
     {
         $input = new CreateFavoriteInput(
-            new PageId(20),
+            new PageId(30),
             new Status(0),
         );
         $favoriteMysqlQuery = new class extends FavoriteMysqlQuery
@@ -36,7 +36,7 @@ final class CreateFavoriteTest extends TestCase
     public function test1の値がstatusにある場合()
     {
         $input = new CreateFavoriteInput(
-            new PageId(29),
+            new PageId(39),
             new Status(1),
         );
         $favoriteMysqlQuery = new class extends FavoriteMysqlQuery
