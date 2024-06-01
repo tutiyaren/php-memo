@@ -1,4 +1,10 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+use App\Infrastructure\Redirect\Redirect;
+use App\Adapter\Repository\PageRepository;
+use App\UseCase\GetAllPageUseCase;
+use App\Infrastructure\Dao\PageDao;
+
 $dbUserName = 'root';
 $dbPassword = 'password';
 $pdo = new PDO(
@@ -6,20 +12,15 @@ $pdo = new PDO(
     $dbUserName,
     $dbPassword
 );
-
 $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
-
-if($keyword) {
-    $sql = 'SELECT * FROM pages WHERE title LIKE :keyword';
-    $statement = $pdo->prepare($sql);
-    $statement->bindValue(':keyword', '%' . $keyword . '%', PDO::PARAM_STR);
+$pageAllRepository = new PageRepository(new PageDao($pdo));
+$getAllUseCase = new GetAllPageUseCase($pageAllRepository);
+if (!empty($keyword)) {
+    $pages = $getAllUseCase->searchAllPage($keyword);
 }
-if(!$keyword) {
-    $sql = 'SELECT * FROM pages';
-    $statement = $pdo->prepare($sql);
+if(empty($keyword)) {
+    $pages = $getAllUseCase->readAllPage();
 }
-$statement->execute();
-$pages = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 $date_format = 'Y年m月d日H時i分s秒';
 
@@ -34,7 +35,7 @@ array_multisort($standard_key_array, SORT_DESC, $pages);
 
   <div>
     <form method="GET">
-      <input type="text" name="keyword" placeholder="Search...">
+      <input type="text" name="keyword" placeholder="Search..." value="<?php echo $keyword ?>">
       <button type="submit" name="search">検索</button>
     </form>
   </div>
