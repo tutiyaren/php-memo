@@ -38,13 +38,13 @@ try {
 
     if($checkPageId) {
         $useCaseInput = new EditFavoriteInput($pege_id, $status);
-        $useCase = new EditFavoriteInteractor($useCaseInput);
+        $useCase = new EditFavoriteInteractor($useCaseInput, $favoriteMysqlQuery, $favoriteMysqlCommand);
     }
     if(!$checkPageId) {
         $useCaseInput = new CreateFavoriteInput($pege_id, $status);
         $useCase = new CreateFavoriteInteractor($useCaseInput, $favoriteMysqlQuery, $favoriteMysqlCommand);
     }
-    $useCaseOutput = $useCase->handler();
+    $useCaseOutput = $useCase->run();
     if(!$useCaseOutput->isSuccess()) {
         throw new Exception($useCaseOutput->message());
     }
