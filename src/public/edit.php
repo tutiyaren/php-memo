@@ -1,4 +1,11 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+use App\Infrastructure\Redirect\Redirect;
+use App\Adapter\Repository\PageRepository;
+
+$id = $_GET['id'];
+
+
 $dbUserName = 'root';
 $dbPassword = 'password';
 $pdo = new PDO(
@@ -6,9 +13,7 @@ $pdo = new PDO(
     $dbUserName,
     $dbPassword
 );
-
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
 $sql = "SELECT * FROM pages where id = $id";
 $statement = $pdo->prepare($sql);
 $statement->execute();

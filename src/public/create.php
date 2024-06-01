@@ -1,18 +1,5 @@
-<?php
-
-$errors = $_SESSION['errors'] ?? [];
-unset($_SESSION['errors']);
-
-?>
-
 <body>
   <h2>メモを登録</h2>
-
-  <div>
-    <?php foreach ($errors as $error): ?>
-      <p><?php echo $error; ?></p>
-    <?php endforeach; ?>
-  </div>
 
   <form method="post" action="./store.php">
 
