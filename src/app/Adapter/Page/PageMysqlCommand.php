@@ -28,4 +28,14 @@ class PageMysqlCommand
     {
         return $this->pageDao->readEdit($id);
     }
+
+    public function allPage()
+    {
+        return $this->pageDao->allPage();
+    }
+
+    public function searchPage($keyword)
+    {
+        return $this->pageDao->searchPage($keyword);
+    }
 }
