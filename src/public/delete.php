@@ -1,4 +1,5 @@
 <?php
+
 $dbUserName = 'root';
 $dbPassword = 'password';
 $pdo = new PDO(
@@ -7,7 +8,7 @@ $pdo = new PDO(
     $dbPassword
 );
 
-$id = filter_input(INPUT_GET, 'id');
+$id = filter_input(INPUT_POST, 'id');
 
 $sqlDeleteFavorites = "DELETE FROM page_favorites WHERE page_id = :page_id";
 $statementDeleteFavorites = $pdo->prepare($sqlDeleteFavorites);

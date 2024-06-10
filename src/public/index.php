@@ -38,17 +38,18 @@ array_multisort($standard_key_array, SORT_DESC, $pages);
 
 <head>
   <link href="https://use.fontawesome.com/releases/v6.5.2/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/modal.css">
 </head>
 <body>
 
-  <div>
+  <div class="search">
     <form method="GET">
       <input type="text" name="keyword" placeholder="Search..." value="<?php echo $keyword ?>">
       <button type="submit" name="search">検索</button>
     </form>
   </div>
 
-  <div>
+  <div class="addMemo">
     <a href="./create.php">メモを追加</a><br>
   </div>
 
@@ -58,7 +59,7 @@ array_multisort($standard_key_array, SORT_DESC, $pages);
     <?php endforeach; ?>
   </div>
 
-  <div>
+  <div class="body">
     <table border="1">
       <tr>
         <th>タイトル</th>
@@ -88,11 +89,25 @@ array_multisort($standard_key_array, SORT_DESC, $pages);
               </form>
           </td>
           <td><a href="./edit.php?id=<?php echo $page['id']; ?>">編集</a></td>
-          <td><a href="./delete.php?id=<?php echo $page['id']; ?>">削除</a></td>
+          <td><a href="#" id="deleteMemo" class="deleteLink" data-id="<?php echo $page['id']; ?>" data-title="<?php echo $page['title']; ?>" data-content="<?php echo $page['content']; ?>">削除</a></td>
         </tr>
       <?php endforeach; ?>
-
     </table>
+
   </div>
 
+  <div class="modal-overlay">
+    <div class="form">
+      <form action="./delete.php" id="deleteForm" method="post" class="delete-form">
+        <input type="hidden" name="id" id="deleteId">
+        <p class="form-title"><span>このメモを削除しますか？</span></p>
+        <p><input class="title" type="title" name="title" id="deleteTitle" readonly></p>
+        <p><textarea class="content" name="content" id="deleteContent" readonly></textarea></p>
+        <button class="deleteButton">削除</button>
+        <button class="return">戻る</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="./js/main.js"></script>
 </body>
