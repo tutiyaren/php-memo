@@ -58,4 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
       button.closet('form').submit();
     });
   });
+
+  // scroll
+  const element = document.querySelector('.body');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const height = element.offsetHeight;
+    const r = Math.floor((scrolled % 55) + 100);
+    const g = Math.floor((height % 55) + 100);
+    const b = Math.floor(((scrolled + height) % 155) + 100);
+
+    const color = `rgb(${r}, ${g}, ${b})`;
+    element.style.backgroundColor = color;
+  });
+
 });
