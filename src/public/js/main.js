@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // modal
   const deleteLinks = document.querySelectorAll('.deleteLink');
   const deleteForm = document.querySelector('.delete-form');
   const deleteId = document.getElementById('deleteId');
@@ -9,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const addMemo = document.querySelector('.addMemo');
   const returnButton = document.querySelector('.return');
   const modalOverlay = document.querySelector('.modal-overlay');
+  
 
   deleteLinks.forEach((link) => {
     link.addEventListener('click', (event) => {
@@ -47,4 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
     search.classList.remove('opacity');
     addMemo.classList.remove('opacity');
   }
+
+  // click
+  const toggleAlertButtons = document.querySelectorAll('.toggleAlert');
+  toggleAlertButtons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+      alert('マークが変更されます');
+      button.closet('form').submit();
+    });
+  });
 });

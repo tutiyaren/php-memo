@@ -75,8 +75,8 @@ array_multisort($standard_key_array, SORT_DESC, $pages);
           <td><?php echo $page['content']; ?></td>
           <td><?php echo date($date_format, strtotime($page['created_at'])); ?></td>
           <td style="text-align: center;">
-              <form action="./toggle.php" method="post" style="margin-top: 50%;">
-                  <button type="submit">
+              <form action="./toggle.php" class="toggleForm" method="post" style="margin-top: 50%;">
+                  <button type="submit" class="toggleAlert">
                     <?php if ($page['status'] == 1): ?>
                         <i class="fa-solid fa-fire" style="color: red;"></i>
                     <?php endif; ?>
